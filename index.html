@@ -811,45 +811,74 @@
 
     /* ─── RESPONSIVO ─────────────────────────── */
     @media (max-width: 768px) {
-      nav { display: none; gap: 0; }
-      nav.open {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 64px;
-        left: 0;
-        right: 0;
-        background: var(--white);
-        border-bottom: 1px solid var(--gray-200);
-        padding: 16px 24px 24px;
-        gap: 16px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      }
 
-      header { position: sticky; }
+      /* ── Header: logo menor, só botão CTA visível ── */
+      .header-inner { height: 56px; padding: 0 16px; }
+      .logo { font-size: 1.05rem; }
+      .menu-toggle { display: none; }
+      nav { display: flex; gap: 0; }
+      nav a:not(.nav-cta) { display: none; }
+      .nav-cta { padding: 9px 16px; font-size: 0.85rem; }
 
-      .menu-toggle { display: flex; }
+      /* ── Hero: títulos menores, padding reduzido ── */
+      .hero { padding: 44px 16px; }
+      .hero h1 { font-size: clamp(1.55rem, 7vw, 2.1rem); letter-spacing: -0.3px; }
+      .hero p { font-size: 0.92rem; margin-bottom: 24px; }
+      .hero-badges { gap: 8px; margin-top: 22px; }
+      .hero-badge-item { font-size: 0.74rem; padding: 6px 11px; }
 
-      .hero { padding: 64px 24px; }
+      /* ── Seções: padding reduzido, títulos ajustados ── */
+      section { padding: 40px 16px; }
+      .section-title { font-size: clamp(1.2rem, 5vw, 1.65rem); }
+      .section-sub { font-size: 0.9rem; }
 
-      .form-layout {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
+      /* ── Diferenciais: 1 coluna ── */
+      .diferenciais-header { margin-bottom: 20px; }
+      .diferenciais-grid { grid-template-columns: 1fr; gap: 12px; }
+      .dif-card { padding: 20px 18px; }
 
+      /* ── Vídeo: 90% da largura ── */
+      .video-section { padding: 36px 16px; }
+      .video-wrapper { width: 90%; }
+
+      /* ── Produtos: 2 colunas, imagens centralizadas ── */
+      .produtos-header { margin-bottom: 24px; }
+      .produtos-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .prod-card { padding: 16px 12px; }
+      .prod-img-wrap { height: 100px; margin-bottom: 14px; }
+      .prod-img { width: 88px; height: 88px; }
+      .prod-card h3 { font-size: 0.9rem; }
+
+      /* ── Como funciona: 1 coluna ── */
+      .como-header { margin-bottom: 28px; }
+      .passos { grid-template-columns: 1fr; gap: 28px; }
       .passo:not(:last-child)::after { display: none; }
-
-      .passos { gap: 32px; }
-
       .passo { padding: 0; }
+      .passo h3 { font-size: 0.95rem; }
 
-      section { padding: 56px 24px; }
+      /* ── Depoimentos: 1 coluna ── */
+      .depoimentos-header { margin-bottom: 28px; }
+      .depoimentos-grid { grid-template-columns: 1fr; gap: 12px; }
+      .dep-card { padding: 20px 18px; }
+      .dep-texto { font-size: 0.875rem; }
 
-      form { padding: 24px 20px; }
-    }
-
-    @media (max-width: 480px) {
-      .produtos-grid { grid-template-columns: 1fr 1fr; }
+      /* ── Formulário: 100% largura, botões touch-friendly ── */
+      .form-layout { grid-template-columns: 1fr; gap: 28px; }
+      form { padding: 20px 14px; }
+      input[type="text"],
+      input[type="tel"] { padding: 13px 14px; font-size: 1rem; }
+      .qty-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.35rem;
+        border-radius: 8px;
+      }
+      .qty-controls { gap: 8px; }
+      .qty-input { width: 46px; padding: 8px 4px; font-size: 0.92rem; }
+      .qty-row { padding: 12px 0; }
+      .qty-thumb { width: 38px; height: 38px; }
+      .qty-name { font-size: 0.85rem; gap: 8px; }
+      .btn-whatsapp { padding: 16px; font-size: 0.97rem; }
     }
   </style>
 </head>
@@ -953,12 +982,12 @@
 <!-- ═══ VÍDEO ═════════════════════════════════════════════ -->
 <section class="video-section">
   <div class="container">
-    <h2 class="section-title">Componentes usinados em titânio</h2>
+    <h2 class="section-title">Componentes usinados em níquel cromo</h2>
     <div class="video-outer">
       <div class="video-wrapper">
         <iframe
           src="https://www.youtube.com/embed/5JdXRR15n24?autoplay=1&mute=1&loop=1&playlist=5JdXRR15n24&controls=0&showinfo=0"
-          title="Componentes usinados em titânio"
+          title="Componentes usinados em níquel cromo"
           allow="autoplay; encrypted-media"
           allowfullscreen>
         </iframe>
