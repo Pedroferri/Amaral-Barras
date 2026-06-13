@@ -1394,7 +1394,7 @@
     minimoAviso.classList.toggle('visible', total > 0 && !valid);
   }
 
-  // ── Contador com aceleração por pressão ─────
+  // ── Botões +/− com pressão contínua ─────────
   function changeQty(targetId, delta) {
     const input = document.getElementById(targetId);
     input.value = Math.max(0, (parseInt(input.value) || 0) + delta);
@@ -1402,24 +1402,21 @@
   }
 
   function startHold(targetId, delta) {
-    changeQty(targetId, delta);
-    let stepCount = 0;
-    let timerId;
-    function getDelay() {
-      if (stepCount < 5)  return 280;
-      if (stepCount < 15) return 130;
-      if (stepCount < 30) return 70;
-      return 40;
-    }
-    function scheduleNext() {
-      timerId = setTimeout(() => {
-        changeQty(targetId, delta);
-        stepCount++;
-        scheduleNext();
-      }, getDelay());
-    }
-    scheduleNext();
-    return () => clearTimeout(timerId);
+    let holdTimer   = null;
+    let repeatTimer = null;
+    let holding     = false;
+
+    holdTimer = setTimeout(() => {
+      holding = true;
+      changeQty(targetId, delta);
+      repeatTimer = setInterval(() => changeQty(targetId, delta), 300);
+    }, 800);
+
+    return function stop(isRelease) {
+      clearTimeout(holdTimer);
+      clearInterval(repeatTimer);
+      if (isRelease && !holding) changeQty(targetId, delta);
+    };
   }
 
   let stopHold = null;
@@ -1429,19 +1426,22 @@
 
     function onStart(e) {
       if (e.type === 'touchstart') e.preventDefault();
-      if (stopHold) stopHold();
+      if (stopHold) stopHold(false);
       stopHold = startHold(btn.dataset.target, delta());
     }
-    function onStop() {
-      if (stopHold) { stopHold(); stopHold = null; }
+    function onRelease() {
+      if (stopHold) { stopHold(true);  stopHold = null; }
+    }
+    function onCancel() {
+      if (stopHold) { stopHold(false); stopHold = null; }
     }
 
     btn.addEventListener('mousedown',   onStart);
     btn.addEventListener('touchstart',  onStart, { passive: false });
-    btn.addEventListener('mouseup',     onStop);
-    btn.addEventListener('mouseleave',  onStop);
-    btn.addEventListener('touchend',    onStop);
-    btn.addEventListener('touchcancel', onStop);
+    btn.addEventListener('mouseup',     onRelease);
+    btn.addEventListener('touchend',    onRelease);
+    btn.addEventListener('mouseleave',  onCancel);
+    btn.addEventListener('touchcancel', onCancel);
   });
 
   // ── Botões de atalho (+5, +10, +20) ─────────
