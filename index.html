@@ -405,7 +405,17 @@
     }
 
     /* ─── FORMULÁRIO ─────────────────────────── */
-    .formulario { background: var(--white); }
+    .formulario { background: var(--navy); }
+
+    .formulario .section-label { color: rgba(255,255,255,0.55); }
+    .formulario .section-title { color: var(--white); }
+    .formulario .section-sub   { color: rgba(255,255,255,0.72); }
+    .formulario .form-highlight {
+      background: rgba(255,255,255,0.08);
+      border-left-color: rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.72);
+    }
+    .formulario .form-highlight strong { color: var(--white); }
 
     .form-layout {
       display: grid;
@@ -477,15 +487,42 @@
       margin-bottom: 16px;
     }
 
+    .qty-group { border-bottom: 1px solid var(--gray-100); }
+    .qty-group:last-child { border-bottom: none; }
+
     .qty-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--gray-100);
+      padding: 10px 0 6px;
     }
 
-    .qty-row:last-of-type { border-bottom: none; }
+    .qty-shortcuts {
+      display: flex;
+      gap: 6px;
+      padding-bottom: 10px;
+    }
+
+    .qty-shortcut-btn {
+      flex: 1;
+      padding: 5px 0;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--blue-accent);
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      font-family: inherit;
+      line-height: 1;
+      touch-action: manipulation;
+    }
+
+    .qty-shortcut-btn:hover {
+      background: #dbeafe;
+      border-color: var(--blue-accent);
+    }
 
     .qty-name {
       display: flex;
@@ -511,13 +548,13 @@
     }
 
     .qty-btn {
-      width: 30px;
-      height: 30px;
-      border-radius: 6px;
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
       border: 1px solid var(--gray-200);
       background: var(--gray-50);
       color: var(--gray-800);
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -525,12 +562,17 @@
       transition: background 0.15s, border-color 0.15s;
       font-weight: 700;
       line-height: 1;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
     }
 
     .qty-btn:hover {
       background: var(--gray-200);
       border-color: var(--gray-400);
     }
+
+    .qty-btn:active { background: var(--gray-200); }
 
     .qty-input {
       width: 52px;
@@ -867,12 +909,6 @@
       form { padding: 20px 14px; }
       input[type="text"],
       input[type="tel"] { padding: 13px 14px; font-size: 1rem; }
-      .qty-btn {
-        width: 44px;
-        height: 44px;
-        font-size: 1.35rem;
-        border-radius: 8px;
-      }
       .qty-controls { gap: 8px; }
       .qty-input { width: 46px; padding: 8px 4px; font-size: 0.92rem; }
       .qty-row { padding: 12px 0; }
@@ -1178,63 +1214,98 @@
 
         <div class="qty-label">Quantidade por tipo</div>
 
-        <div class="qty-row">
-          <div class="qty-name">
-            <img class="qty-thumb" src="imagens/barra-alta.jpg.png" alt="Alta" />
-            <span>Alta</span>
+        <div class="qty-group">
+          <div class="qty-row">
+            <div class="qty-name">
+              <img class="qty-thumb" src="imagens/barra-alta.jpg.png" alt="Alta" />
+              <span>Alta</span>
+            </div>
+            <div class="qty-controls">
+              <button type="button" class="qty-btn" data-action="minus" data-target="qtyAlta">−</button>
+              <input type="number" class="qty-input" id="qtyAlta" value="0" min="0" />
+              <button type="button" class="qty-btn" data-action="plus" data-target="qtyAlta">+</button>
+            </div>
           </div>
-          <div class="qty-controls">
-            <button type="button" class="qty-btn" data-action="minus" data-target="qtyAlta">−</button>
-            <input type="number" class="qty-input" id="qtyAlta" value="0" min="0" />
-            <button type="button" class="qty-btn" data-action="plus" data-target="qtyAlta">+</button>
-          </div>
-        </div>
-
-        <div class="qty-row">
-          <div class="qty-name">
-            <img class="qty-thumb" src="imagens/barra-media.jpg.png" alt="Média" />
-            <span>Média</span>
-          </div>
-          <div class="qty-controls">
-            <button type="button" class="qty-btn" data-action="minus" data-target="qtyMedia">−</button>
-            <input type="number" class="qty-input" id="qtyMedia" value="0" min="0" />
-            <button type="button" class="qty-btn" data-action="plus" data-target="qtyMedia">+</button>
+          <div class="qty-shortcuts">
+            <button type="button" class="qty-shortcut-btn" data-add="5"  data-target="qtyAlta">+5</button>
+            <button type="button" class="qty-shortcut-btn" data-add="10" data-target="qtyAlta">+10</button>
+            <button type="button" class="qty-shortcut-btn" data-add="20" data-target="qtyAlta">+20</button>
           </div>
         </div>
 
-        <div class="qty-row">
-          <div class="qty-name">
-            <img class="qty-thumb" src="imagens/barra-baixa.jpg.png" alt="Baixa" />
-            <span>Baixa</span>
+        <div class="qty-group">
+          <div class="qty-row">
+            <div class="qty-name">
+              <img class="qty-thumb" src="imagens/barra-media.jpg.png" alt="Média" />
+              <span>Média</span>
+            </div>
+            <div class="qty-controls">
+              <button type="button" class="qty-btn" data-action="minus" data-target="qtyMedia">−</button>
+              <input type="number" class="qty-input" id="qtyMedia" value="0" min="0" />
+              <button type="button" class="qty-btn" data-action="plus" data-target="qtyMedia">+</button>
+            </div>
           </div>
-          <div class="qty-controls">
-            <button type="button" class="qty-btn" data-action="minus" data-target="qtyBaixa">−</button>
-            <input type="number" class="qty-input" id="qtyBaixa" value="0" min="0" />
-            <button type="button" class="qty-btn" data-action="plus" data-target="qtyBaixa">+</button>
-          </div>
-        </div>
-
-        <div class="qty-row">
-          <div class="qty-name">
-            <img class="qty-thumb" src="imagens/barra-baixissima.jpg.png" alt="Baixíssima" />
-            <span>Baixíssima</span>
-          </div>
-          <div class="qty-controls">
-            <button type="button" class="qty-btn" data-action="minus" data-target="qtyBaixissima">−</button>
-            <input type="number" class="qty-input" id="qtyBaixissima" value="0" min="0" />
-            <button type="button" class="qty-btn" data-action="plus" data-target="qtyBaixissima">+</button>
+          <div class="qty-shortcuts">
+            <button type="button" class="qty-shortcut-btn" data-add="5"  data-target="qtyMedia">+5</button>
+            <button type="button" class="qty-shortcut-btn" data-add="10" data-target="qtyMedia">+10</button>
+            <button type="button" class="qty-shortcut-btn" data-add="20" data-target="qtyMedia">+20</button>
           </div>
         </div>
 
-        <div class="qty-row">
-          <div class="qty-name">
-            <img class="qty-thumb" src="imagens/barra-unica.jpg.png" alt="Barra Única" />
-            <span>Barra Única</span>
+        <div class="qty-group">
+          <div class="qty-row">
+            <div class="qty-name">
+              <img class="qty-thumb" src="imagens/barra-baixa.jpg.png" alt="Baixa" />
+              <span>Baixa</span>
+            </div>
+            <div class="qty-controls">
+              <button type="button" class="qty-btn" data-action="minus" data-target="qtyBaixa">−</button>
+              <input type="number" class="qty-input" id="qtyBaixa" value="0" min="0" />
+              <button type="button" class="qty-btn" data-action="plus" data-target="qtyBaixa">+</button>
+            </div>
           </div>
-          <div class="qty-controls">
-            <button type="button" class="qty-btn" data-action="minus" data-target="qtyUnica">−</button>
-            <input type="number" class="qty-input" id="qtyUnica" value="0" min="0" />
-            <button type="button" class="qty-btn" data-action="plus" data-target="qtyUnica">+</button>
+          <div class="qty-shortcuts">
+            <button type="button" class="qty-shortcut-btn" data-add="5"  data-target="qtyBaixa">+5</button>
+            <button type="button" class="qty-shortcut-btn" data-add="10" data-target="qtyBaixa">+10</button>
+            <button type="button" class="qty-shortcut-btn" data-add="20" data-target="qtyBaixa">+20</button>
+          </div>
+        </div>
+
+        <div class="qty-group">
+          <div class="qty-row">
+            <div class="qty-name">
+              <img class="qty-thumb" src="imagens/barra-baixissima.jpg.png" alt="Baixíssima" />
+              <span>Baixíssima</span>
+            </div>
+            <div class="qty-controls">
+              <button type="button" class="qty-btn" data-action="minus" data-target="qtyBaixissima">−</button>
+              <input type="number" class="qty-input" id="qtyBaixissima" value="0" min="0" />
+              <button type="button" class="qty-btn" data-action="plus" data-target="qtyBaixissima">+</button>
+            </div>
+          </div>
+          <div class="qty-shortcuts">
+            <button type="button" class="qty-shortcut-btn" data-add="5"  data-target="qtyBaixissima">+5</button>
+            <button type="button" class="qty-shortcut-btn" data-add="10" data-target="qtyBaixissima">+10</button>
+            <button type="button" class="qty-shortcut-btn" data-add="20" data-target="qtyBaixissima">+20</button>
+          </div>
+        </div>
+
+        <div class="qty-group">
+          <div class="qty-row">
+            <div class="qty-name">
+              <img class="qty-thumb" src="imagens/barra-unica.jpg.png" alt="Barra Única" />
+              <span>Barra Única</span>
+            </div>
+            <div class="qty-controls">
+              <button type="button" class="qty-btn" data-action="minus" data-target="qtyUnica">−</button>
+              <input type="number" class="qty-input" id="qtyUnica" value="0" min="0" />
+              <button type="button" class="qty-btn" data-action="plus" data-target="qtyUnica">+</button>
+            </div>
+          </div>
+          <div class="qty-shortcuts">
+            <button type="button" class="qty-shortcut-btn" data-add="5"  data-target="qtyUnica">+5</button>
+            <button type="button" class="qty-shortcut-btn" data-add="10" data-target="qtyUnica">+10</button>
+            <button type="button" class="qty-shortcut-btn" data-add="20" data-target="qtyUnica">+20</button>
           </div>
         </div>
 
@@ -1323,16 +1394,60 @@
     minimoAviso.classList.toggle('visible', total > 0 && !valid);
   }
 
+  // ── Contador com aceleração por pressão ─────
+  function changeQty(targetId, delta) {
+    const input = document.getElementById(targetId);
+    input.value = Math.max(0, (parseInt(input.value) || 0) + delta);
+    updateTotal();
+  }
+
+  function startHold(targetId, delta) {
+    changeQty(targetId, delta);
+    let stepCount = 0;
+    let timerId;
+    function getDelay() {
+      if (stepCount < 5)  return 280;
+      if (stepCount < 15) return 130;
+      if (stepCount < 30) return 70;
+      return 40;
+    }
+    function scheduleNext() {
+      timerId = setTimeout(() => {
+        changeQty(targetId, delta);
+        stepCount++;
+        scheduleNext();
+      }, getDelay());
+    }
+    scheduleNext();
+    return () => clearTimeout(timerId);
+  }
+
+  let stopHold = null;
+
   document.querySelectorAll('.qty-btn').forEach(btn => {
+    const delta = () => btn.dataset.action === 'plus' ? 1 : -1;
+
+    function onStart(e) {
+      if (e.type === 'touchstart') e.preventDefault();
+      if (stopHold) stopHold();
+      stopHold = startHold(btn.dataset.target, delta());
+    }
+    function onStop() {
+      if (stopHold) { stopHold(); stopHold = null; }
+    }
+
+    btn.addEventListener('mousedown',   onStart);
+    btn.addEventListener('touchstart',  onStart, { passive: false });
+    btn.addEventListener('mouseup',     onStop);
+    btn.addEventListener('mouseleave',  onStop);
+    btn.addEventListener('touchend',    onStop);
+    btn.addEventListener('touchcancel', onStop);
+  });
+
+  // ── Botões de atalho (+5, +10, +20) ─────────
+  document.querySelectorAll('.qty-shortcut-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const input  = document.getElementById(btn.dataset.target);
-      const current = parseInt(input.value) || 0;
-      if (btn.dataset.action === 'plus') {
-        input.value = current + 1;
-      } else {
-        input.value = Math.max(0, current - 1);
-      }
-      updateTotal();
+      changeQty(btn.dataset.target, parseInt(btn.dataset.add));
     });
   });
 
