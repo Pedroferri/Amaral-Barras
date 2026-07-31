@@ -95,9 +95,9 @@ export default function Catalogo() {
                   {p.nome}
                 </h3>
 
-                <p className="font-sans font-semibold text-[16px] text-[#0284c7] mb-4">
+                <p className="font-display font-bold text-[18px] text-accent mb-4">
                   {p.preco}
-                  <span className="text-[#71717a] font-normal text-[13px] ml-1.5">/ unid.</span>
+                  <span className="text-ink-3 font-normal text-[13px] ml-1.5">/ unid.</span>
                 </p>
 
                 <div className="flex justify-end mt-auto">
@@ -105,7 +105,7 @@ export default function Catalogo() {
                     href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Olá! Gostaria de saber mais sobre a ${p.nome}.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block bg-[#38bdf8] text-white font-sans font-semibold uppercase text-[12px] px-4 py-2 rounded-[2px] no-underline transition-colors duration-150 hover:bg-[#0ea5e9]"
+                    className="inline-block bg-accent text-white font-mono font-semibold uppercase text-[11px] px-4 py-2 rounded-[2px] no-underline transition-colors duration-150 hover:bg-ink"
                     style={{ letterSpacing: "1px" }}
                   >
                     VER DETALHES →
